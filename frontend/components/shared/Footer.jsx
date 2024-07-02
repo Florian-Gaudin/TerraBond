@@ -4,7 +4,7 @@ const Footer = () => {
     return (
         <div>
             <footer className="text-center w-full p-10">
-                All rights reserved &copy; {new Date().getFullYear()}
+                Tous droits réservés &copy; {new Date().getFullYear()}
             </footer>
         </div>
     );

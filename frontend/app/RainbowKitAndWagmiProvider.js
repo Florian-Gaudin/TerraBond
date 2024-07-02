@@ -19,7 +19,9 @@ const RainbowKitAndWagmiProvider = ({ children }) => {
     return (
         <WagmiProvider config={config}>
             <QueryClientProvider client={queryClient}>
-                <RainbowKitProvider>{children}</RainbowKitProvider>
+                <RainbowKitProvider locale="fr-FR">
+                    {children}
+                </RainbowKitProvider>
             </QueryClientProvider>
         </WagmiProvider>
     );

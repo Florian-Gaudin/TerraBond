@@ -1,3 +1,10 @@
+"use client";
+
+import NotConnected from "@/components/shared/NotConnected";
+import { useAccount } from "wagmi";
+
 export default function Home() {
-    return <div>Ok</div>;
+    const { isConnected } = useAccount();
+
+    return <>{isConnected ? <div>Ok</div> : <NotConnected />}</>;
 }

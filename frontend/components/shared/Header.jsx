@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 // Wagmi
 import { useAccount, useReadContract } from "wagmi";
 import { contractAbi, contractAddress } from "@/constants";
@@ -29,7 +28,6 @@ const Header = () => {
     return (
         <nav className="navbar flex justify-between p-8">
             <div>Logo Terrabond</div>
-            <Link href="/">Home</Link>
             <div>
                 {isConnected ? (
                     <Badge variant>{getBadgeText()}</Badge>
