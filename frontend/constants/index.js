@@ -9,6 +9,92 @@ export const contractAbi = [
         inputs: [
             {
                 internalType: "address",
+                name: "spender",
+                type: "address",
+            },
+            {
+                internalType: "uint256",
+                name: "allowance",
+                type: "uint256",
+            },
+            {
+                internalType: "uint256",
+                name: "needed",
+                type: "uint256",
+            },
+        ],
+        name: "ERC20InsufficientAllowance",
+        type: "error",
+    },
+    {
+        inputs: [
+            {
+                internalType: "address",
+                name: "sender",
+                type: "address",
+            },
+            {
+                internalType: "uint256",
+                name: "balance",
+                type: "uint256",
+            },
+            {
+                internalType: "uint256",
+                name: "needed",
+                type: "uint256",
+            },
+        ],
+        name: "ERC20InsufficientBalance",
+        type: "error",
+    },
+    {
+        inputs: [
+            {
+                internalType: "address",
+                name: "approver",
+                type: "address",
+            },
+        ],
+        name: "ERC20InvalidApprover",
+        type: "error",
+    },
+    {
+        inputs: [
+            {
+                internalType: "address",
+                name: "receiver",
+                type: "address",
+            },
+        ],
+        name: "ERC20InvalidReceiver",
+        type: "error",
+    },
+    {
+        inputs: [
+            {
+                internalType: "address",
+                name: "sender",
+                type: "address",
+            },
+        ],
+        name: "ERC20InvalidSender",
+        type: "error",
+    },
+    {
+        inputs: [
+            {
+                internalType: "address",
+                name: "spender",
+                type: "address",
+            },
+        ],
+        name: "ERC20InvalidSpender",
+        type: "error",
+    },
+    {
+        inputs: [
+            {
+                internalType: "address",
                 name: "owner",
                 type: "address",
             },
@@ -33,6 +119,31 @@ export const contractAbi = [
             {
                 indexed: true,
                 internalType: "address",
+                name: "owner",
+                type: "address",
+            },
+            {
+                indexed: true,
+                internalType: "address",
+                name: "spender",
+                type: "address",
+            },
+            {
+                indexed: false,
+                internalType: "uint256",
+                name: "value",
+                type: "uint256",
+            },
+        ],
+        name: "Approval",
+        type: "event",
+    },
+    {
+        anonymous: false,
+        inputs: [
+            {
+                indexed: true,
+                internalType: "address",
                 name: "previousOwner",
                 type: "address",
             },
@@ -50,132 +161,46 @@ export const contractAbi = [
         anonymous: false,
         inputs: [
             {
-                indexed: false,
-                internalType: "uint256",
-                name: "proposalId",
-                type: "uint256",
-            },
-        ],
-        name: "ProposalRegistered",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
+                indexed: true,
                 internalType: "address",
-                name: "voter",
+                name: "from",
+                type: "address",
+            },
+            {
+                indexed: true,
+                internalType: "address",
+                name: "to",
                 type: "address",
             },
             {
                 indexed: false,
                 internalType: "uint256",
-                name: "proposalId",
+                name: "value",
                 type: "uint256",
             },
         ],
-        name: "Voted",
+        name: "Transfer",
         type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "address",
-                name: "voterAddress",
-                type: "address",
-            },
-        ],
-        name: "VoterRegistered",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "enum Voting.WorkflowStatus",
-                name: "previousStatus",
-                type: "uint8",
-            },
-            {
-                indexed: false,
-                internalType: "enum Voting.WorkflowStatus",
-                name: "newStatus",
-                type: "uint8",
-            },
-        ],
-        name: "WorkflowStatusChange",
-        type: "event",
-    },
-    {
-        inputs: [
-            {
-                internalType: "string",
-                name: "_desc",
-                type: "string",
-            },
-        ],
-        name: "addProposal",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
     },
     {
         inputs: [
             {
                 internalType: "address",
-                name: "_addr",
+                name: "owner",
+                type: "address",
+            },
+            {
+                internalType: "address",
+                name: "spender",
                 type: "address",
             },
         ],
-        name: "addVoter",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "endProposalsRegistering",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "endVotingSession",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "uint256",
-                name: "_id",
-                type: "uint256",
-            },
-        ],
-        name: "getOneProposal",
+        name: "allowance",
         outputs: [
             {
-                components: [
-                    {
-                        internalType: "string",
-                        name: "description",
-                        type: "string",
-                    },
-                    {
-                        internalType: "uint256",
-                        name: "voteCount",
-                        type: "uint256",
-                    },
-                ],
-                internalType: "struct Voting.Proposal",
+                internalType: "uint256",
                 name: "",
-                type: "tuple",
+                type: "uint256",
             },
         ],
         stateMutability: "view",
@@ -185,33 +210,109 @@ export const contractAbi = [
         inputs: [
             {
                 internalType: "address",
-                name: "_addr",
+                name: "spender",
+                type: "address",
+            },
+            {
+                internalType: "uint256",
+                name: "value",
+                type: "uint256",
+            },
+        ],
+        name: "approve",
+        outputs: [
+            {
+                internalType: "bool",
+                name: "",
+                type: "bool",
+            },
+        ],
+        stateMutability: "nonpayable",
+        type: "function",
+    },
+    {
+        inputs: [
+            {
+                internalType: "address",
+                name: "account",
                 type: "address",
             },
         ],
-        name: "getVoter",
+        name: "balanceOf",
         outputs: [
             {
-                components: [
-                    {
-                        internalType: "bool",
-                        name: "isRegistered",
-                        type: "bool",
-                    },
-                    {
-                        internalType: "bool",
-                        name: "hasVoted",
-                        type: "bool",
-                    },
-                    {
-                        internalType: "uint256",
-                        name: "votedProposalId",
-                        type: "uint256",
-                    },
-                ],
-                internalType: "struct Voting.Voter",
+                internalType: "uint256",
                 name: "",
-                type: "tuple",
+                type: "uint256",
+            },
+        ],
+        stateMutability: "view",
+        type: "function",
+    },
+    {
+        inputs: [
+            {
+                internalType: "address",
+                name: "from",
+                type: "address",
+            },
+            {
+                internalType: "uint256",
+                name: "amount",
+                type: "uint256",
+            },
+        ],
+        name: "burn",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+    },
+    {
+        inputs: [],
+        name: "buyTokens",
+        outputs: [],
+        stateMutability: "payable",
+        type: "function",
+    },
+    {
+        inputs: [],
+        name: "decimals",
+        outputs: [
+            {
+                internalType: "uint8",
+                name: "",
+                type: "uint8",
+            },
+        ],
+        stateMutability: "view",
+        type: "function",
+    },
+    {
+        inputs: [
+            {
+                internalType: "address",
+                name: "to",
+                type: "address",
+            },
+            {
+                internalType: "uint256",
+                name: "amount",
+                type: "uint256",
+            },
+        ],
+        name: "mint",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+    },
+    {
+        inputs: [],
+        name: "name",
+        outputs: [
+            {
+                internalType: "string",
+                name: "",
+                type: "string",
             },
         ],
         stateMutability: "view",
@@ -241,33 +342,91 @@ export const contractAbi = [
         inputs: [
             {
                 internalType: "uint256",
-                name: "_id",
+                name: "amount",
                 type: "uint256",
             },
         ],
-        name: "setVote",
+        name: "sellTokens",
         outputs: [],
         stateMutability: "nonpayable",
         type: "function",
     },
     {
         inputs: [],
-        name: "startProposalsRegistering",
-        outputs: [],
-        stateMutability: "nonpayable",
+        name: "symbol",
+        outputs: [
+            {
+                internalType: "string",
+                name: "",
+                type: "string",
+            },
+        ],
+        stateMutability: "view",
         type: "function",
     },
     {
         inputs: [],
-        name: "startVotingSession",
-        outputs: [],
+        name: "totalSupply",
+        outputs: [
+            {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
+        stateMutability: "view",
+        type: "function",
+    },
+    {
+        inputs: [
+            {
+                internalType: "address",
+                name: "to",
+                type: "address",
+            },
+            {
+                internalType: "uint256",
+                name: "value",
+                type: "uint256",
+            },
+        ],
+        name: "transfer",
+        outputs: [
+            {
+                internalType: "bool",
+                name: "",
+                type: "bool",
+            },
+        ],
         stateMutability: "nonpayable",
         type: "function",
     },
     {
-        inputs: [],
-        name: "tallyVotes",
-        outputs: [],
+        inputs: [
+            {
+                internalType: "address",
+                name: "from",
+                type: "address",
+            },
+            {
+                internalType: "address",
+                name: "to",
+                type: "address",
+            },
+            {
+                internalType: "uint256",
+                name: "value",
+                type: "uint256",
+            },
+        ],
+        name: "transferFrom",
+        outputs: [
+            {
+                internalType: "bool",
+                name: "",
+                type: "bool",
+            },
+        ],
         stateMutability: "nonpayable",
         type: "function",
     },
@@ -286,28 +445,9 @@ export const contractAbi = [
     },
     {
         inputs: [],
-        name: "winningProposalID",
-        outputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "workflowStatus",
-        outputs: [
-            {
-                internalType: "enum Voting.WorkflowStatus",
-                name: "",
-                type: "uint8",
-            },
-        ],
-        stateMutability: "view",
+        name: "withdraw",
+        outputs: [],
+        stateMutability: "nonpayable",
         type: "function",
     },
 ];

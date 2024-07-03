@@ -1,8 +1,10 @@
+import RainbowKitAndWagmiProvider from "./RainbowKitAndWagmiProvider";
+import { Toaster } from "@/components/ui/toaster";
 import "./globals.css";
 import { Inter as FontSans } from "next/font/google";
 import Layout from "@/components/shared/Layout";
-import RainbowKitAndWagmiProvider from "./RainbowKitAndWagmiProvider";
 import "@radix-ui/themes/styles.css";
+
 import { cn } from "@/lib/utils";
 
 const fontSans = FontSans({
@@ -28,6 +30,7 @@ export default function RootLayout({ children }) {
                 <RainbowKitAndWagmiProvider>
                     <Layout>{children}</Layout>
                 </RainbowKitAndWagmiProvider>
+                <Toaster />
             </body>
         </html>
     );
