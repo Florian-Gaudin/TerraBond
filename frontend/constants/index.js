@@ -1,4 +1,4 @@
-export const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+export const contractAddress = "0x49aef2c4005bf572665b09014a563b5b9e46df21"; //0x00B0517de6b2b09aBD3a7B69d66D85eFdb2c7d94
 export const contractAbi = [
     {
         inputs: [],
@@ -250,31 +250,6 @@ export const contractAbi = [
         type: "function",
     },
     {
-        inputs: [
-            {
-                internalType: "address",
-                name: "from",
-                type: "address",
-            },
-            {
-                internalType: "uint256",
-                name: "amount",
-                type: "uint256",
-            },
-        ],
-        name: "burn",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "buyTokens",
-        outputs: [],
-        stateMutability: "payable",
-        type: "function",
-    },
-    {
         inputs: [],
         name: "decimals",
         outputs: [
@@ -288,21 +263,34 @@ export const contractAbi = [
         type: "function",
     },
     {
+        inputs: [],
+        name: "getChainlinkDataFeedLatestAnswer",
+        outputs: [
+            {
+                internalType: "int256",
+                name: "",
+                type: "int256",
+            },
+        ],
+        stateMutability: "view",
+        type: "function",
+    },
+    {
         inputs: [
             {
                 internalType: "address",
-                name: "to",
+                name: "_to",
                 type: "address",
             },
             {
                 internalType: "uint256",
-                name: "amount",
+                name: "_amount",
                 type: "uint256",
             },
         ],
         name: "mint",
         outputs: [],
-        stateMutability: "nonpayable",
+        stateMutability: "payable",
         type: "function",
     },
     {
@@ -334,19 +322,6 @@ export const contractAbi = [
     {
         inputs: [],
         name: "renounceOwnership",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "uint256",
-                name: "amount",
-                type: "uint256",
-            },
-        ],
-        name: "sellTokens",
         outputs: [],
         stateMutability: "nonpayable",
         type: "function",
@@ -439,13 +414,6 @@ export const contractAbi = [
             },
         ],
         name: "transferOwnership",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "withdraw",
         outputs: [],
         stateMutability: "nonpayable",
         type: "function",
