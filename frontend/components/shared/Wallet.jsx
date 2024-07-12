@@ -7,7 +7,7 @@ import { useReadContract } from "wagmi";
 import { contractAbi, contractAddress } from "@/constants";
 
 const Wallet = ({ address, refreshTrigger }) => {
-    const [balance, setBalance] = useState("Chargement...");
+    const [balance, setBalance] = useState(null);
 
     const { data: tokenBalance, refetch: refetchTokenBalance } =
         useReadContract({
@@ -25,15 +25,13 @@ const Wallet = ({ address, refreshTrigger }) => {
     }, [tokenBalance]);
 
     useEffect(() => {
-        if (refreshTrigger) {
-            refetchTokenBalance();
-        }
+        refetchTokenBalance();
     }, [refreshTrigger, refetchTokenBalance]);
 
     return (
         <div className="w-1/3 mt-8 flex flex-col space-y-10">
             <span>Mon Portefeuille : </span>
-            <span>{balance} TRB</span>
+            <span>{balance !== null ? balance + " TRB" : "0 TRB"}</span>
         </div>
     );
 };

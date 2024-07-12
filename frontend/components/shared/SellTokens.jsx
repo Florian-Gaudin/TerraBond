@@ -12,9 +12,9 @@ import {
     useWaitForTransactionReceipt,
 } from "wagmi";
 import { contractAbi, contractAddress } from "@/constants";
-import Wallet from "./Wallet";
+// import Wallet from "./Wallet";
 
-function SellTokens() {
+function SellTokens({ onTransactionSuccess }) {
     const { address, isConnected } = useAccount();
     const { toast } = useToast();
 
@@ -109,7 +109,6 @@ function SellTokens() {
                     abi: contractAbi,
                     functionName: "burn",
                     args: [amountInTokens],
-                    // account: address,
                 });
                 toast({
                     title: "Transaction en cours",
@@ -140,7 +139,7 @@ function SellTokens() {
     // Refetch TRB balance and display toast if transaction is successful
     useEffect(() => {
         if (isSuccess) {
-            setRefreshTrigger((prev) => !prev);
+            onTransactionSuccess();
             toast({
                 title: "Tokens vendus avec succès",
                 description: "Transaction confirmée",
@@ -152,7 +151,6 @@ function SellTokens() {
 
     return (
         <div className="w-1/3 mt-8 flex flex-col space-y-10">
-            <Wallet address={address} refreshTrigger={refreshTrigger} />
             <div className="text-lg text-center">Je vends mes tokens</div>
             {renderBurnButton()}
 
@@ -209,3 +207,168 @@ function SellTokens() {
 }
 
 export default SellTokens;
+
+// import React, { useEffect, useState } from "react";
+// import { Input } from "../ui/input";
+// import { Button } from "../ui/button";
+// import { useToast } from "../ui/use-toast";
+// import { RocketIcon } from "@radix-ui/react-icons";
+// import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
+// // Wagmi
+// import {
+//     useAccount,
+//     useReadContract,
+//     useWriteContract,
+//     useWaitForTransactionReceipt,
+// } from "wagmi";
+// import { contractAbi, contractAddress } from "@/constants";
+// import Wallet from "./Wallet";
+
+// function SellTokens({ onTransactionSuccess }) {
+//     const { address, isConnected } = useAccount();
+//     const { toast } = useToast();
+
+//     const [inputValue, setInputValue] = useState("");
+
+//     const handleInputChange = (e) => {
+//         setInputValue(e.target.value);
+//     };
+
+//     const {
+//         data: hash,
+//         error,
+//         isPending: isPending,
+//         writeContract,
+//     } = useWriteContract({
+//         address: contractAddress,
+//         abi: contractAbi,
+//         functionName: "burn",
+//     });
+
+//     const {
+//         isLoading: isConfirming,
+//         isSuccess,
+//         error: errorConfirmation,
+//     } = useWaitForTransactionReceipt({
+//         hash,
+//     });
+
+//     const handleSellTokens = async () => {
+//         if (isConnected) {
+//             try {
+//                 writeContract({
+//                     address: contractAddress,
+//                     abi: contractAbi,
+//                     functionName: "burn",
+//                     args: [address, inputValue],
+//                 });
+
+//                 toast({
+//                     title: "Transaction en cours",
+//                     description: `Vente de tokens pour ${inputValue} en cours`,
+//                     status: "info",
+//                     duration: 5000,
+//                 });
+//             } catch (error) {
+//                 console.error(error);
+//                 toast({
+//                     title: "Echec de la transaction",
+//                     description: error.message,
+//                     status: "error",
+//                     duration: 5000,
+//                 });
+//             }
+//         } else {
+//             toast({
+//                 title: "Connectez votre portefeuille",
+//                 description:
+//                     "Vous devez connecter votre portefeuille pour vendre des tokens",
+//                 status: "warning",
+//                 duration: 5000,
+//             });
+//         }
+//     };
+
+//     // Refetch TRB balance and display toast if transaction is successful
+//     useEffect(() => {
+//         if (isSuccess) {
+//             onTransactionSuccess();
+//             toast({
+//                 title: "Tokens vendus avec succès",
+//                 description: "Transaction confirmée",
+//                 status: "success",
+//                 duration: 5000,
+//             });
+//         }
+//     }, [isSuccess, toast, onTransactionSuccess]);
+
+//     return (
+//         <div className="flex flex-col items-center p-8 bg-gray-800 rounded-lg shadow-2xl transition-transform hover:scale-105">
+//             <Input
+//                 className="mr-2"
+//                 type="text"
+//                 placeholder="ex : 1000 TRB"
+//                 value={inputValue}
+//                 onChange={handleInputChange}
+//             />
+//             <Button
+//                 className="bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold py-3 px-6 rounded-full hover:from-blue-600 hover:-to-purple-600 transition duration-300"
+//                 disabled={isPending}
+//                 onClick={handleSellTokens}
+//                 variant="outline"
+//             >
+//                 {isPending ? "Envoi en cours" : "Vendre"}
+//             </Button>
+//             <div className="flex flex-col w-full mt-4">
+//                 {hash && (
+//                     <Alert className="mb-4 bg-lime-200">
+//                         <RocketIcon className="h-4 w-4" />
+//                         <AlertTitle>Information</AlertTitle>
+//                         <AlertDescription>
+//                             Transaction Hash : {hash}
+//                         </AlertDescription>
+//                     </Alert>
+//                 )}
+//                 {isConfirming && (
+//                     <Alert className="mb-4 bg-amber-200">
+//                         <RocketIcon className="h-4 w-4" />
+//                         <AlertTitle>Information</AlertTitle>
+//                         <AlertDescription>
+//                             En attente de confirmation ...
+//                         </AlertDescription>
+//                     </Alert>
+//                 )}
+//                 {isSuccess && (
+//                     <Alert className="mb-4 bg-lime-200">
+//                         <RocketIcon className="h-4 w-4" />
+//                         <AlertTitle>Information</AlertTitle>
+//                         <AlertDescription>
+//                             Transaction confirmée
+//                         </AlertDescription>
+//                     </Alert>
+//                 )}
+//                 {errorConfirmation && (
+//                     <Alert className="mb-4 bg-red-400">
+//                         <RocketIcon className="h-4 w-4" />
+//                         <AlertTitle>Erreur</AlertTitle>
+//                         <AlertDescription>
+//                             {errorConfirmation.shortMessage ||
+//                                 errorConfirmation.message}
+//                         </AlertDescription>
+//                     </Alert>
+//                 )}
+//                 {error && (
+//                     <Alert className="mb-4 bg-red-400">
+//                         <RocketIcon className="h-4 w-4" />
+//                         <AlertTitle>Erreur</AlertTitle>
+//                         <AlertDescription>
+//                             {error.shortMessage || error.message}
+//                         </AlertDescription>
+//                     </Alert>
+//                 )}
+//             </div>
+//         </div>
+//     );
+// }
+
+// export default SellTokens;
