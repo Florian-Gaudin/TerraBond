@@ -14,6 +14,12 @@ contract Market is ERC20, Ownable, DataConsumerV3 {
 
     // Event that log buy operation
     event BuyTokens(address buyer, uint256 amountOfETH, uint256 amountOfTokens);
+    // Event that logs burn operation
+    event BurnTokens(
+        address seller,
+        uint256 amountOfTokens,
+        uint256 amountOfETH
+    );
 
     function mint(address _to, uint256 _amount) external payable {
         int256 ethInDollars = getChainlinkDataFeedLatestAnswer();
@@ -34,4 +40,31 @@ contract Market is ERC20, Ownable, DataConsumerV3 {
         // emit the event
         emit BuyTokens(_to, msg.value, _amount * 10 ** 18);
     }
+
+    function burn(uint256 _amount) external {
+        require(
+            balanceOf(msg.sender) >= _amount * 10 ** 18,
+            "Not enough tokens to burn"
+        );
+
+        int256 ethInDollars = getChainlinkDataFeedLatestAnswer();
+        require(ethInDollars > 0, "Invalid price feed value");
+
+        uint256 ethInDollarsUint = uint256(ethInDollars / 10 ** 8);
+
+        uint256 ethToReturn = (_amount * 1 ether * PRICE_PER_TOKEN) /
+            ethInDollarsUint;
+        require(
+            address(this).balance >= ethToReturn,
+            "Not enough ETH in contract"
+        );
+
+        _burn(msg.sender, _amount * 10 ** 18);
+        payable(msg.sender).transfer(ethToReturn);
+
+        emit BurnTokens(msg.sender, _amount * 10 ** 18, ethToReturn);
+    }
+
+    // Allow contract to receive ETH
+    receive() external payable {}
 }

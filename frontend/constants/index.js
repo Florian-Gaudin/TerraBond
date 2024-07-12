@@ -1,4 +1,4 @@
-export const contractAddress = "0x49aef2c4005bf572665b09014a563b5b9e46df21"; //0x00B0517de6b2b09aBD3a7B69d66D85eFdb2c7d94
+export const contractAddress = "0x49aef2c4005bf572665b09014a563b5b9e46df21";
 export const contractAbi = [
     {
         inputs: [],
@@ -142,6 +142,56 @@ export const contractAbi = [
         anonymous: false,
         inputs: [
             {
+                indexed: false,
+                internalType: "address",
+                name: "seller",
+                type: "address",
+            },
+            {
+                indexed: false,
+                internalType: "uint256",
+                name: "amountOfTokens",
+                type: "uint256",
+            },
+            {
+                indexed: false,
+                internalType: "uint256",
+                name: "amountOfETH",
+                type: "uint256",
+            },
+        ],
+        name: "BurnTokens",
+        type: "event",
+    },
+    {
+        anonymous: false,
+        inputs: [
+            {
+                indexed: false,
+                internalType: "address",
+                name: "buyer",
+                type: "address",
+            },
+            {
+                indexed: false,
+                internalType: "uint256",
+                name: "amountOfETH",
+                type: "uint256",
+            },
+            {
+                indexed: false,
+                internalType: "uint256",
+                name: "amountOfTokens",
+                type: "uint256",
+            },
+        ],
+        name: "BuyTokens",
+        type: "event",
+    },
+    {
+        anonymous: false,
+        inputs: [
+            {
                 indexed: true,
                 internalType: "address",
                 name: "previousOwner",
@@ -247,6 +297,19 @@ export const contractAbi = [
             },
         ],
         stateMutability: "view",
+        type: "function",
+    },
+    {
+        inputs: [
+            {
+                internalType: "uint256",
+                name: "_amount",
+                type: "uint256",
+            },
+        ],
+        name: "burn",
+        outputs: [],
+        stateMutability: "nonpayable",
         type: "function",
     },
     {
@@ -417,5 +480,9 @@ export const contractAbi = [
         outputs: [],
         stateMutability: "nonpayable",
         type: "function",
+    },
+    {
+        stateMutability: "payable",
+        type: "receive",
     },
 ];
