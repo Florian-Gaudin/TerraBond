@@ -4,6 +4,8 @@ import BuyTokens from "@/components/shared/BuyTokens";
 import Footer from "@/components/shared/Footer";
 import Header from "@/components/shared/Header";
 import NotConnected from "@/components/shared/NotConnected";
+import PolygonClipPath from "@/components/shared/PolygonClipPath";
+import "../styles/_homepageHeader.scss";
 import SellTokens from "@/components/shared/SellTokens";
 import { useState } from "react";
 import { useAccount } from "wagmi";
@@ -18,21 +20,25 @@ export default function Home() {
 
     return (
         <>
-            <div className="flex flex-col min-h-screen">
-                <Header refreshTrigger={refreshTrigger} />
-                {isConnected ? (
-                    <div className="w-full">
-                        <BuyTokens
-                            onTransactionSuccess={handleTransactionSuccess}
-                        />
-                        <SellTokens
-                            onTransactionSuccess={handleTransactionSuccess}
-                        />
-                    </div>
-                ) : (
-                    <NotConnected />
-                )}
-                <Footer />
+            <div className="">
+                {/* bg-bg relative isolate pt-14 bg-fixed bg-center bg-cover bg-no-repeat bg-home w-full */}
+                {/* <PolygonClipPath /> */}
+                <div className="flex flex-col min-h-screen w-full">
+                    <Header refreshTrigger={refreshTrigger} />
+                    {isConnected ? (
+                        <div className="w-full flex justify-center">
+                            <BuyTokens
+                                onTransactionSuccess={handleTransactionSuccess}
+                            />
+                            <SellTokens
+                                onTransactionSuccess={handleTransactionSuccess}
+                            />
+                        </div>
+                    ) : (
+                        <NotConnected />
+                    )}
+                    <Footer />
+                </div>
             </div>
         </>
     );

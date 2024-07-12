@@ -233,6 +233,32 @@ export const contractAbi = [
         type: "event",
     },
     {
+        inputs: [],
+        name: "MAX_SELL_AMOUNT",
+        outputs: [
+            {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
+        stateMutability: "view",
+        type: "function",
+    },
+    {
+        inputs: [],
+        name: "SECONDS_IN_A_DAY",
+        outputs: [
+            {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
+        stateMutability: "view",
+        type: "function",
+    },
+    {
         inputs: [
             {
                 internalType: "address",
