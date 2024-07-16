@@ -1,4 +1,4 @@
-export const contractAddress = "0x49aef2c4005bf572665b09014a563b5b9e46df21";
+export const contractAddress = "0x06786bCbc114bbfa670E30A1AC35dFd1310Be82f";
 export const contractAbi = [
     {
         inputs: [],
@@ -193,6 +193,69 @@ export const contractAbi = [
         inputs: [
             {
                 indexed: true,
+                internalType: "uint256",
+                name: "offerId",
+                type: "uint256",
+            },
+            {
+                indexed: true,
+                internalType: "address",
+                name: "buyer",
+                type: "address",
+            },
+        ],
+        name: "OfferAccepted",
+        type: "event",
+    },
+    {
+        anonymous: false,
+        inputs: [
+            {
+                indexed: true,
+                internalType: "uint256",
+                name: "offerId",
+                type: "uint256",
+            },
+            {
+                indexed: true,
+                internalType: "address",
+                name: "seller",
+                type: "address",
+            },
+        ],
+        name: "OfferCancelled",
+        type: "event",
+    },
+    {
+        anonymous: false,
+        inputs: [
+            {
+                indexed: true,
+                internalType: "uint256",
+                name: "offerId",
+                type: "uint256",
+            },
+            {
+                indexed: true,
+                internalType: "address",
+                name: "seller",
+                type: "address",
+            },
+            {
+                indexed: false,
+                internalType: "uint256",
+                name: "amount",
+                type: "uint256",
+            },
+        ],
+        name: "OfferCreated",
+        type: "event",
+    },
+    {
+        anonymous: false,
+        inputs: [
+            {
+                indexed: true,
                 internalType: "address",
                 name: "previousOwner",
                 type: "address",
@@ -256,6 +319,19 @@ export const contractAbi = [
             },
         ],
         stateMutability: "view",
+        type: "function",
+    },
+    {
+        inputs: [
+            {
+                internalType: "uint256",
+                name: "_offerId",
+                type: "uint256",
+            },
+        ],
+        name: "acceptOffer",
+        outputs: [],
+        stateMutability: "payable",
         type: "function",
     },
     {
@@ -339,6 +415,32 @@ export const contractAbi = [
         type: "function",
     },
     {
+        inputs: [
+            {
+                internalType: "uint256",
+                name: "_offerId",
+                type: "uint256",
+            },
+        ],
+        name: "cancelOffer",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+    },
+    {
+        inputs: [
+            {
+                internalType: "uint256",
+                name: "_amount",
+                type: "uint256",
+            },
+        ],
+        name: "createOffer",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+    },
+    {
         inputs: [],
         name: "decimals",
         outputs: [
@@ -346,6 +448,41 @@ export const contractAbi = [
                 internalType: "uint8",
                 name: "",
                 type: "uint8",
+            },
+        ],
+        stateMutability: "view",
+        type: "function",
+    },
+    {
+        inputs: [],
+        name: "getAllOffers",
+        outputs: [
+            {
+                components: [
+                    {
+                        internalType: "uint256",
+                        name: "offerId",
+                        type: "uint256",
+                    },
+                    {
+                        internalType: "address",
+                        name: "seller",
+                        type: "address",
+                    },
+                    {
+                        internalType: "uint256",
+                        name: "amount",
+                        type: "uint256",
+                    },
+                    {
+                        internalType: "bool",
+                        name: "isActive",
+                        type: "bool",
+                    },
+                ],
+                internalType: "struct Market.Offer[]",
+                name: "",
+                type: "tuple[]",
             },
         ],
         stateMutability: "view",
@@ -390,6 +527,53 @@ export const contractAbi = [
                 internalType: "string",
                 name: "",
                 type: "string",
+            },
+        ],
+        stateMutability: "view",
+        type: "function",
+    },
+    {
+        inputs: [],
+        name: "offerCount",
+        outputs: [
+            {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
+        stateMutability: "view",
+        type: "function",
+    },
+    {
+        inputs: [
+            {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
+        name: "offers",
+        outputs: [
+            {
+                internalType: "uint256",
+                name: "offerId",
+                type: "uint256",
+            },
+            {
+                internalType: "address",
+                name: "seller",
+                type: "address",
+            },
+            {
+                internalType: "uint256",
+                name: "amount",
+                type: "uint256",
+            },
+            {
+                internalType: "bool",
+                name: "isActive",
+                type: "bool",
             },
         ],
         stateMutability: "view",

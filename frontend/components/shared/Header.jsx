@@ -47,7 +47,7 @@ const Header = ({ refreshTrigger }) => {
 
     return (
         <nav className="navbar flex justify-between p-8">
-            <div>Logo Terrabond</div>
+            <img src="/banner_logo.png" alt="Logo TerraBond" className="h-20" />
             <div className="flex items-center space-x-4">
                 {isConnected ? (
                     <Badge variant>{getBadgeText()}</Badge>

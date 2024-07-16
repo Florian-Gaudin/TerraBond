@@ -66,7 +66,7 @@ function BuyTokens({ onTransactionSuccess }) {
             <Input
                 className="mr-2"
                 type="text"
-                placeholder="ex : 1000 €"
+                placeholder="ex : 1000 $"
                 value={inputValue}
                 onChange={handleInputChange}
             />

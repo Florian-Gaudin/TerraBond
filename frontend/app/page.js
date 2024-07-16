@@ -9,6 +9,7 @@ import "../styles/_homepageHeader.scss";
 import SellTokens from "@/components/shared/SellTokens";
 import { useState } from "react";
 import { useAccount } from "wagmi";
+import OTCMarket from "@/components/shared/OTCMarket";
 
 export default function Home() {
     const { isConnected } = useAccount();
@@ -26,11 +27,20 @@ export default function Home() {
                 <div className="flex flex-col min-h-screen w-full">
                     <Header refreshTrigger={refreshTrigger} />
                     {isConnected ? (
-                        <div className="w-full flex justify-center">
-                            <BuyTokens
-                                onTransactionSuccess={handleTransactionSuccess}
-                            />
-                            <SellTokens
+                        <div>
+                            <div className="w-full flex justify-center">
+                                <BuyTokens
+                                    onTransactionSuccess={
+                                        handleTransactionSuccess
+                                    }
+                                />
+                                <SellTokens
+                                    onTransactionSuccess={
+                                        handleTransactionSuccess
+                                    }
+                                />
+                            </div>
+                            <OTCMarket
                                 onTransactionSuccess={handleTransactionSuccess}
                             />
                         </div>
