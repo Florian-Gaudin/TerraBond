@@ -21,14 +21,13 @@ export default function Home() {
 
     return (
         <>
-            <div className="">
-                {/* bg-bg relative isolate pt-14 bg-fixed bg-center bg-cover bg-no-repeat bg-home w-full */}
-                {/* <PolygonClipPath /> */}
+            <div className="bg-bg relative isolate pt-14 bg-fixed bg-center bg-cover bg-no-repeat bg-home w-full">
+                <PolygonClipPath />
                 <div className="flex flex-col min-h-screen w-full">
                     <Header refreshTrigger={refreshTrigger} />
                     {isConnected ? (
                         <div>
-                            <div className="w-full flex justify-center">
+                            {/* <div className="w-full flex justify-center">
                                 <BuyTokens
                                     onTransactionSuccess={
                                         handleTransactionSuccess
@@ -42,7 +41,7 @@ export default function Home() {
                             </div>
                             <OTCMarket
                                 onTransactionSuccess={handleTransactionSuccess}
-                            />
+                            /> */}
                         </div>
                     ) : (
                         <NotConnected />

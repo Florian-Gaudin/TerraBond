@@ -4,7 +4,6 @@ import "./globals.css";
 import { Inter as FontSans } from "next/font/google";
 import Layout from "@/components/shared/Layout";
 import "@radix-ui/themes/styles.css";
-
 import { cn } from "@/lib/utils";
 
 const fontSans = FontSans({

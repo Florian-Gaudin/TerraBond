@@ -34,12 +34,6 @@ function OTCmarket({ onTransactionSuccess }) {
         functionName: "getChainlinkDataFeedLatestAnswer",
     });
 
-    // useEffect(() => {
-    //     if (ethPrice) {
-    //         const ethPriceInUSD = Number(ethPrice) / 10 ** 8;
-    //         setEthPriceInUSD(ethPriceInUSD);
-    //     }
-    // }, [ethPrice]);
     useEffect(() => {
         if (ethPrice) {
             const ethPriceInUSD = parseFloat(ethPrice) / 10 ** 8;
@@ -56,7 +50,6 @@ function OTCmarket({ onTransactionSuccess }) {
 
     useEffect(() => {
         if (offersData && offersData.length > 0) {
-            console.log("Offers data:", offersData);
             // Filtrer les offres invalides (montant à 0 ou adresse nulle)
             const filteredOffers = offersData.filter(
                 (offer) =>
@@ -77,37 +70,54 @@ function OTCmarket({ onTransactionSuccess }) {
         return "N/A";
     };
 
-    // Handle creating a new offer
-    const { data: createOfferHash, writeContract: createOffer } =
-        useWriteContract({
-            address: contractAddress,
-            abi: contractAbi,
-            functionName: "createOffer",
-        });
+    const {
+        data: createOfferHash,
+        error: createOfferError,
+        isPending: isCreateOfferPending,
+        writeContract: createOffer,
+    } = useWriteContract({
+        address: contractAddress,
+        abi: contractAbi,
+        functionName: "createOffer",
+    });
 
-    // Handle accepting an offer
-    const { data: acceptOfferHash, writeContract: acceptOffer } =
-        useWriteContract({
-            address: contractAddress,
-            abi: contractAbi,
-            functionName: "acceptOffer",
-        });
+    const {
+        isLoading: isConfirmingCreateOffer,
+        isSuccessCreateOffer,
+        error: errorConfirmationCreateOffer,
+    } = useWaitForTransactionReceipt({
+        createOfferHash,
+    });
 
-    // Handle cancelling an offer
-    const { data: cancelOfferHash, writeContract: cancelOffer } =
-        useWriteContract({
-            address: contractAddress,
-            abi: contractAbi,
-            functionName: "cancelOffer",
-        });
+    const {
+        data: acceptOfferHash,
+        error: acceptOfferError,
+        isPending: isAcceptOfferPending,
+        writeContract: acceptOffer,
+    } = useWriteContract({
+        address: contractAddress,
+        abi: contractAbi,
+        functionName: "acceptOffer",
+    });
 
-    // const {
-    //     isLoading: isConfirming,
-    //     isSuccess,
-    //     error: errorConfirmation,
-    // } = useWaitForTransactionReceipt({
-    //     hash,
-    // });
+    const {
+        data: cancelOfferHash,
+        error: cancelOfferError,
+        isPending: isCancelOfferPending,
+        writeContract: cancelOffer,
+    } = useWriteContract({
+        address: contractAddress,
+        abi: contractAbi,
+        functionName: "cancelOffer",
+    });
+
+    const {
+        isLoading: isConfirming,
+        isSuccessAcceptOffer,
+        error: errorConfirmation,
+    } = useWaitForTransactionReceipt({
+        acceptOfferHash,
+    });
 
     const handleCreateOffer = () => {
         if (isConnected) {
@@ -119,8 +129,8 @@ function OTCmarket({ onTransactionSuccess }) {
                     args: [parseInt(inputValue)],
                 });
                 toast({
-                    title: "Offer Created",
-                    description: `Your offer to sell ${inputValue} TRB has been created.`,
+                    title: "Envoi de l'offre en cours",
+                    description: `Veuillez valider la transaction dans votre portefeuille pour confirmer la mise en vente de ${inputValue} TRB.`,
                     status: "success",
                     duration: 5000,
                 });
@@ -135,9 +145,9 @@ function OTCmarket({ onTransactionSuccess }) {
             }
         } else {
             toast({
-                title: "Connect your wallet",
+                title: "Connectez votre portefeuille",
                 description:
-                    "You need to connect your wallet to create an offer",
+                    "Vous devez vous connecter à votre portefeuille pour créer une offre",
                 status: "warning",
                 duration: 5000,
             });
@@ -170,8 +180,8 @@ function OTCmarket({ onTransactionSuccess }) {
                     value: price,
                 });
                 toast({
-                    title: "Offer Accepted",
-                    description: `You have accepted the offer to buy ${amount} TRB.`,
+                    title: "Acceptation de l'offre en cours",
+                    description: `Veuillez valider la transaction dans votre portefeuille pour confirmer l'offre et acheter ${amount} TRB.`,
                     status: "success",
                     duration: 5000,
                 });
@@ -186,9 +196,9 @@ function OTCmarket({ onTransactionSuccess }) {
             }
         } else {
             toast({
-                title: "Connect your wallet",
+                title: "Connectez votre portefeuille",
                 description:
-                    "You need to connect your wallet to accept an offer",
+                    "Vous devez vous connecter à votre portefeuille pour créer une offre",
                 status: "warning",
                 duration: 5000,
             });
@@ -205,8 +215,8 @@ function OTCmarket({ onTransactionSuccess }) {
                     args: [offerId],
                 });
                 toast({
-                    title: "Offer Cancelled",
-                    description: `Your offer has been cancelled.`,
+                    title: "Annulation de l'offre en cours",
+                    description: `Veuillez valider la transaction dans votre portefeuille pour confirmer l'annulation de votre offre.`,
                     status: "success",
                     duration: 5000,
                 });
@@ -221,9 +231,9 @@ function OTCmarket({ onTransactionSuccess }) {
             }
         } else {
             toast({
-                title: "Connect your wallet",
+                title: "Connectez votre portefeuille",
                 description:
-                    "You need to connect your wallet to cancel an offer",
+                    "Vous devez vous connecter à votre portefeuille pour créer une offre",
                 status: "warning",
                 duration: 5000,
             });
@@ -246,7 +256,7 @@ function OTCmarket({ onTransactionSuccess }) {
                     className="bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold py-3 px-6 rounded-full hover:from-blue-600 hover:to-purple-600 transition duration-300"
                     onClick={handleCreateOffer}
                 >
-                    Create Offer
+                    Créer une offre
                 </Button>
             </div>
 
@@ -268,17 +278,20 @@ function OTCmarket({ onTransactionSuccess }) {
                                 </div>
                                 <span>Vendeur: {offer.seller.toString()}</span>
                                 <div className="flex justify-center">
-                                    <Button
-                                        className="ml-4 bg-green-500 text-white"
-                                        onClick={() =>
-                                            handleAcceptOffer(
-                                                offer.offerId,
-                                                offer.amount
-                                            )
-                                        }
-                                    >
-                                        Accept
-                                    </Button>
+                                    {offer.seller != address && (
+                                        <Button
+                                            className="ml-4 bg-green-500 text-white"
+                                            onClick={() =>
+                                                handleAcceptOffer(
+                                                    offer.offerId,
+                                                    offer.amount
+                                                )
+                                            }
+                                        >
+                                            Accepter l'offre et acheter{" "}
+                                            {offer.amount} TRB
+                                        </Button>
+                                    )}
                                     {offer.seller === address && (
                                         <Button
                                             className="ml-2 bg-red-500 text-white"
@@ -286,7 +299,7 @@ function OTCmarket({ onTransactionSuccess }) {
                                                 handleCancelOffer(offer.offerId)
                                             }
                                         >
-                                            Cancel
+                                            Annuler mon offre
                                         </Button>
                                     )}
                                 </div>
