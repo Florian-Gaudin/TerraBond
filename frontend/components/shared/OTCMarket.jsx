@@ -241,72 +241,84 @@ function OTCmarket({ onTransactionSuccess }) {
     };
 
     return (
-        <div className="w-1/3 mt-8 flex flex-col space-y-10">
-            <div className="text-lg text-center">OTC Market</div>
+        <div className="flex justify-center m-10 p-10 rounded-md opacity-60 md:opacity-100 text-sm md:text-lg uppercase font-semibold text-bg md:text-white bg-white md:bg-transparent shadow-sm ">
+            <div className="w-1/3 mt-8 flex flex-col space-y-10">
+                <div className="flex flex-col items-center p-8 bg-gray-800 rounded-lg shadow-2xl transition-transform hover:scale-105 bg-white">
+                    <div className="mt-6 text-2xl text-center leading-8 uppercase font-extrabold bg-gradient-to-r from-purple to-red text-transparent bg-clip-text">
+                        OTC Market
+                    </div>
+                    <Input
+                        className="m-4 text-black placeholder-gray-500 placeholder-opacity-100"
+                        type="text"
+                        placeholder="Montant en TRB"
+                        value={inputValue}
+                        onChange={handleInputChange}
+                    />
+                    <Button
+                        className="text-xl font-bold text-center leading-8 uppercase bg-gradient-to-r from-purple to-red text-transparent bg-clip-text"
+                        onClick={handleCreateOffer}
+                    >
+                        Créer une offre
+                    </Button>
+                </div>
 
-            <div className="flex flex-col items-center p-8 bg-gray-800 rounded-lg shadow-2xl transition-transform hover:scale-105">
-                <Input
-                    className="mr-2"
-                    type="text"
-                    placeholder="Amount in TRB"
-                    value={inputValue}
-                    onChange={handleInputChange}
-                />
-                <Button
-                    className="bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold py-3 px-6 rounded-full hover:from-blue-600 hover:to-purple-600 transition duration-300"
-                    onClick={handleCreateOffer}
-                >
-                    Créer une offre
-                </Button>
-            </div>
+                <div className="flex flex-col w-full">
+                    {offers.map((offer) => {
+                        const amount = offer.amount.toString();
 
-            <div className="flex flex-col w-full">
-                {offers.map((offer) => {
-                    const amount = offer.amount.toString();
-
-                    return (
-                        <Alert key={offer.offerId} className="mb-4 bg-gray-200">
-                            <RocketIcon className="h-4 w-4" />
-                            <AlertTitle>
-                                Offre ID # {offer.offerId.toString()}
-                            </AlertTitle>
-                            <AlertDescription className="flex flex-col">
-                                <span>Montant de l'offre : {amount} TRB</span>{" "}
-                                <div>
-                                    Equivalent ETH:{" "}
-                                    {calculateEthEquivalent(amount)} ETH
-                                </div>
-                                <span>Vendeur: {offer.seller.toString()}</span>
-                                <div className="flex justify-center">
-                                    {offer.seller != address && (
-                                        <Button
-                                            className="ml-4 bg-green-500 text-white"
-                                            onClick={() =>
-                                                handleAcceptOffer(
-                                                    offer.offerId,
-                                                    offer.amount
-                                                )
-                                            }
-                                        >
-                                            Accepter l'offre et acheter{" "}
-                                            {offer.amount} TRB
-                                        </Button>
-                                    )}
-                                    {offer.seller === address && (
-                                        <Button
-                                            className="ml-2 bg-red-500 text-white"
-                                            onClick={() =>
-                                                handleCancelOffer(offer.offerId)
-                                            }
-                                        >
-                                            Annuler mon offre
-                                        </Button>
-                                    )}
-                                </div>
-                            </AlertDescription>
-                        </Alert>
-                    );
-                })}
+                        return (
+                            <Alert
+                                key={offer.offerId}
+                                className="mb-4 bg-gray-200"
+                            >
+                                <RocketIcon className="h-4 w-4" />
+                                <AlertTitle>
+                                    Offre ID # {offer.offerId.toString()}
+                                </AlertTitle>
+                                <AlertDescription className="flex flex-col">
+                                    <span>
+                                        Montant de l'offre : {amount} TRB
+                                    </span>{" "}
+                                    <div>
+                                        Equivalent ETH:{" "}
+                                        {calculateEthEquivalent(amount)} ETH
+                                    </div>
+                                    <span>
+                                        Vendeur: {offer.seller.toString()}
+                                    </span>
+                                    <div className="flex justify-center">
+                                        {offer.seller != address && (
+                                            <Button
+                                                className="ml-4 bg-green-500 text-white"
+                                                onClick={() =>
+                                                    handleAcceptOffer(
+                                                        offer.offerId,
+                                                        offer.amount
+                                                    )
+                                                }
+                                            >
+                                                Accepter l'offre et acheter{" "}
+                                                {offer.amount} TRB
+                                            </Button>
+                                        )}
+                                        {offer.seller === address && (
+                                            <Button
+                                                className="ml-2 bg-red-500 text-white"
+                                                onClick={() =>
+                                                    handleCancelOffer(
+                                                        offer.offerId
+                                                    )
+                                                }
+                                            >
+                                                Annuler mon offre
+                                            </Button>
+                                        )}
+                                    </div>
+                                </AlertDescription>
+                            </Alert>
+                        );
+                    })}
+                </div>
             </div>
         </div>
     );

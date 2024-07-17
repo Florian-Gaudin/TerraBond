@@ -29,10 +29,12 @@ const Wallet = ({ address, refreshTrigger }) => {
     }, [refreshTrigger, refetchTokenBalance]);
 
     return (
-        <div className="w-1/3 mt-8 flex flex-col space-y-10">
-            <span>Mon Portefeuille : </span>
-            <span>{balance !== null ? balance + " TRB" : "0 TRB"}</span>
-        </div>
+        <a href="/">
+            <div className="rounded-md px-5 py-4 my-4 md:px-12 md:py-5 min-w-[250px] md:min-w-[300px] opacity-60 md:opacity-100 text-sm md:text-lg uppercase font-semibold text-bg md:text-white bg-white md:bg-transparent border-2 border-white shadow-sm hover:bg-white hover:text-bg duration-500">
+                <span>Mon Portefeuille : </span>
+                <span>{balance !== null ? balance + " TRB" : "0 TRB"}</span>
+            </div>{" "}
+        </a>
     );
 };
 

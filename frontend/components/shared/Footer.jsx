@@ -25,7 +25,7 @@ const Footer = () => {
 
     return (
         <div>
-            <div className="p-10 mb-4">
+            <div className="p-10 m-10 rounded-md opacity-60 md:opacity-100 text-sm md:text-lg uppercase font-semibold text-bg md:text-white bg-white md:bg-transparent shadow-sm">
                 <div>Events :</div>
                 {eventsValue && eventsValue.length > 0 ? (
                     <div className="w-full h-36 border overflow-y-scroll">
@@ -48,7 +48,7 @@ const Footer = () => {
                     </div>
                 )}
             </div>
-            <footer className="text-center w-full p-10">
+            <footer className="text-center w-full p-10 m-10 opacity-60 md:opacity-100 text-sm md:text-lg uppercase font-semibold text-bg md:text-white bg-white md:bg-transparent ">
                 All rights reserved &copy; {new Date().getFullYear()}
             </footer>
         </div>

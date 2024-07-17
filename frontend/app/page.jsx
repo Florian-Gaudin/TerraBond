@@ -35,6 +35,26 @@ export default function Home() {
                     </div>
                     {isConnected ? (
                         <div>
+                            <div className="mt-12 pt-12 flex items-center justify-center gap-x-16 flex-col md:flex-row">
+                                <a
+                                    href="/buy"
+                                    className="px-5 py-4 my-4 md:px-12 md:py-5 min-w-[250px] md:min-w-[300px] opacity-60 md:opacity-100 text-sm md:text-lg uppercase font-semibold text-bg md:text-white bg-white md:bg-transparent border-2 border-white shadow-sm hover:bg-white hover:text-bg duration-500"
+                                >
+                                    Acheter des TRB
+                                </a>
+                                <a
+                                    href="/sell"
+                                    className="px-5 py-4 my-4 md:px-12 md:py-5 min-w-[250px] md:min-w-[300px] opacity-60 md:opacity-100 text-sm md:text-lg uppercase font-semibold text-bg md:text-white bg-white md:bg-transparent border-2 border-white shadow-sm hover:bg-white hover:text-bg duration-500"
+                                >
+                                    Vendre des TRB
+                                </a>
+                                <a
+                                    href="/otcMarket"
+                                    className="px-5 py-4 my-4 md:px-12 md:py-5 min-w-[250px] md:min-w-[300px] opacity-60 md:opacity-100 text-sm md:text-lg uppercase font-semibold text-bg md:text-white bg-white md:bg-transparent border-2 border-white shadow-sm hover:bg-white hover:text-bg duration-500"
+                                >
+                                    Accéder au marché de gré à gré
+                                </a>
+                            </div>
                             {/* <div className="w-full flex justify-center">
                                 <BuyTokens
                                     onTransactionSuccess={
