@@ -1,15 +1,13 @@
 "use client";
 
-import BuyTokens from "@/components/shared/BuyTokens";
 import Footer from "@/components/shared/Footer";
 import Header from "@/components/shared/Header";
 import NotConnected from "@/components/shared/NotConnected";
 import PolygonClipPath from "@/components/shared/PolygonClipPath";
 import "../styles/_homepageHeader.scss";
-import SellTokens from "@/components/shared/SellTokens";
+import "./globals.css";
 import { useState } from "react";
 import { useAccount } from "wagmi";
-import OTCMarket from "@/components/shared/OTCMarket";
 
 export default function Home() {
     const { isConnected } = useAccount();
@@ -25,6 +23,16 @@ export default function Home() {
                 <PolygonClipPath />
                 <div className="flex flex-col min-h-screen w-full">
                     <Header refreshTrigger={refreshTrigger} />
+                    <div className="text-center fade-in">
+                        <h1 className="text-4xl md:text-8xl uppercase font-title font-extrabold bg-move bg-gradient-to-r from-purple via-red to-purple text-transparent bg-clip-text">
+                            TerraBond
+                        </h1>
+
+                        <p className="mt-6 text-2xl leading-8 uppercase font-extrabold bg-gradient-to-r from-purple to-red text-transparent bg-clip-text">
+                            L'investissement immobilier réinventé par la
+                            blockchain
+                        </p>
+                    </div>
                     {isConnected ? (
                         <div>
                             {/* <div className="w-full flex justify-center">
